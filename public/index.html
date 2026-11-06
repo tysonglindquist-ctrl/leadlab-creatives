@@ -759,6 +759,10 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     bBtn?.classList.toggle('on', onBoard);
     aBtn?.classList.toggle('on', !onBoard);
     document.getElementById('boardFilters')?.style && (document.getElementById('boardFilters').style.display = onBoard ? '' : 'none');
+    const boardKpis=document.getElementById('kpis');
+    if(boardKpis) boardKpis.style.display = onBoard ? '' : 'none';
+    const boardSub=document.getElementById('sub');
+    if(boardSub && !onBoard) boardSub.textContent = 'Motion-style creative performance report · bundled offline data';
     // KPI row in header is board-specific; keep visible always but sub text updates per tab
     const p = new URLSearchParams(location.search);
     p.set('tab', onBoard ? 'board' : 'analytics');
