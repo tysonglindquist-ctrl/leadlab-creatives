@@ -58,7 +58,7 @@
 
   function parseURL(){
     const p=new URLSearchParams(location.search);
-    if(p.get('category')) state.category=p.get('category');
+    if(p.get('category') || p.get('cat')) state.category=p.get('category') || p.get('cat');
     if(p.get('avatar')) state.avatar=p.get('avatar');
     if(p.get('angle')) state.angle=p.get('angle');
     if(p.get('minSpend')!=null && p.get('minSpend')!=='') state.minSpend=Number(p.get('minSpend'));
@@ -75,7 +75,7 @@
     const next=new URLSearchParams();
     next.set('tab', tab);
     if(tab==='analytics'){
-      if(state.category!=='all') next.set('category', state.category);
+      if(state.category!=='all'){ next.set('category', state.category); next.set('cat', state.category); }
       if(state.avatar!=='all') next.set('avatar', state.avatar);
       if(state.angle!=='all') next.set('angle', state.angle);
       if(state.minSpend!==500) next.set('minSpend', String(state.minSpend));
@@ -231,18 +231,63 @@
   }
 
   function renderFilters(){
-    const avatars=[{key:'all',label:'All Avatars / Styles'}, ...Object.entries(A.labels.avatar||{}).map(([k,l])=>({key:k,label:l}))];
-    const angles=[{key:'all',label:'All Angles'}, ...Object.entries(A.labels.angle||{}).map(([k,l])=>({key:k,label:l}))];
-    $('anCat').innerHTML = [
-      ['all','All Categories'],['final_expense','Final Expense'],['mortgage_protection','Mortgage Protection'],['iul','IUL'],['trucker','Trucker / CDL (IUL Niche)']
-    ].map(([k,l])=>`<button type="button" class="chip ${state.category===k?'on':''}" data-k="category" data-v="${k}">${l}</button>`).join('');
-    $('anAvatar').innerHTML = avatars.map(a=>`<button type="button" class="chip ${state.avatar===a.key?'on':''}" data-k="avatar" data-v="${a.key}">${esc(a.label)}</button>`).join('');
-    $('anAngle').innerHTML = angles.map(a=>`<button type="button" class="chip ${state.angle===a.key?'on':''}" data-k="angle" data-v="${a.key}">${esc(a.label)}</button>`).join('');
-    $('anMinSpend').value=String(state.minSpend);
-    $('anScope').value=state.scope;
-    $('anRegionMin').value=String(state.regionMin);
-    $('anRegionSort').value=state.regionSort;
-    $('anRegionMode').value=state.regionMode;
+    const cats=[
+      ['all','All'],
+      ['final_expense','Final Expense'],
+      ['mortgage_protection','Mortgage Protection'],
+      ['iul','IUL'],
+      ['trucker','Trucker · CDL'],
+    ];
+    const catBar=$('anCatBar');
+    if(catBar){
+      catBar.innerHTML = cats.map(([k,l])=>{
+        const on=state.category===k?' on':'';
+        const tag=k==='trucker'?'<span class="tag">IUL</span>':'';
+        return `<button type="button" class="segchip${on}" data-k="category" data-v="${k}">${l}${tag}</button>`;
+      }).join('');
+    }
+
+    const activeCat=catBar && catBar.querySelector('.segchip.on');
+    if(activeCat && activeCat.scrollIntoView){ try{ activeCat.scrollIntoView({inline:'center', block:'nearest', behavior:'instant'}); }catch(e){} }
+
+    // Avatar select with live counts against category+spend (ignore avatar/angle to show available options)
+    const base=(A.ads||[]).filter(a=>{
+      if(state.category==='trucker'){ if(!a.trucker) return false; }
+      else if(state.category!=='all' && a.account!==state.category) return false;
+      if(a.spend < state.minSpend) return false;
+      return true;
+    });
+    const avatarCounts={};
+    const angleCounts={};
+    base.forEach(a=>{ avatarCounts[a.avatar]=(avatarCounts[a.avatar]||0)+1; angleCounts[a.msg_angle]=(angleCounts[a.msg_angle]||0)+1; });
+
+    const avSel=$('anAvatarSel');
+    if(avSel){
+      const opts=[['all','All Formats & Avatars']].concat(
+        Object.entries(A.labels.avatar||{}).map(([k,l])=>[k, `${l} (${avatarCounts[k]||0})`])
+      );
+      avSel.innerHTML = opts.map(([k,l])=>`<option value="${k}" ${state.avatar===k?'selected':''}>${esc(l)}</option>`).join('');
+    }
+    const anSel=$('anAngleSel');
+    if(anSel){
+      const opts=[['all','All Angles']].concat(
+        Object.entries(A.labels.angle||{}).map(([k,l])=>[k, `${l} (${angleCounts[k]||0})`])
+      );
+      anSel.innerHTML = opts.map(([k,l])=>`<option value="${k}" ${state.angle===k?'selected':''}>${esc(l)}</option>`).join('');
+    }
+
+    if($('anMinSpend')) $('anMinSpend').value=String(state.minSpend);
+    if($('anScope')) $('anScope').value=state.scope;
+    const dirty = state.category!=='all' || state.avatar!=='all' || state.angle!=='all' || state.minSpend!==500 || state.scope!=='swipe';
+    if($('anReset')) $('anReset').hidden = !dirty;
+    const spendLabel = state.minSpend>0 ? ('$'+Number(state.minSpend).toLocaleString()+'+') : 'All spend';
+    const scopeLabel = state.scope==='full' ? 'Full account' : 'Swipe set';
+    if($('anScopeBtn')) $('anScopeBtn').textContent = `Scope: ${spendLabel} · ${scopeLabel} ▾`;
+
+    // legacy empty mounts (no-op)
+    if($('anCat')) $('anCat').innerHTML='';
+    if($('anAvatar')) $('anAvatar').innerHTML='';
+    if($('anAngle')) $('anAngle').innerHTML='';
   }
 
   function render(){
@@ -255,14 +300,13 @@
     const totalLeads=ads.reduce((s,a)=>s+a.leads,0);
     const wcpl=wCpl(totalSpend,totalLeads);
 
-    $('anKpis').innerHTML = [
-      ['Creatives', ads.length],
-      ['Spend', moneyExact(totalSpend)],
-      ['Leads', totalLeads.toLocaleString()],
-      ['Weighted CPL', cplStr(wcpl)],
-      ['Top Performers', ads.filter(a=>a.tier==='top').length],
-      ['Scope', state.scope==='swipe' ? 'Swipe set' : 'Full account'],
-    ].map(([l,v])=>`<div class="kpi">${l} <b>${v}</b></div>`).join('');
+    const tops=ads.filter(a=>a.tier==='top').length;
+    const hit=ads.length? tops/ads.length : 0;
+    $('anKpis').innerHTML = `
+      <div class="m"><div class="ml">Spend</div><div class="mv">${money(totalSpend)}</div><div class="ms">${ads.length} creatives</div></div>
+      <div class="m"><div class="ml">Leads</div><div class="mv">${totalLeads.toLocaleString()}</div></div>
+      <div class="m"><div class="ml">Avg CPL</div><div class="mv accent">${cplStr(wcpl)}</div></div>
+      <div class="m"><div class="ml">Winners</div><div class="mv">${tops} / ${ads.length}</div><div class="ms">${Math.round(hit*100)}% hit rate</div></div>`;
 
     $('anTakeaway').innerHTML = `<div class="take-title">Executive readout · ${esc(catLabel())}${state.avatar!=='all'?' · '+esc((A.labels.avatar||{})[state.avatar]||state.avatar):''}</div>
       <ul>${bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>
@@ -539,26 +583,35 @@
   }
 
   function bind(){
+    if(bind._wired) return; bind._wired=true;
     $('panelAnalytics').addEventListener('click', (e)=>{
-      const chip=e.target.closest('.chip[data-k]');
-      if(chip){
-        state[chip.dataset.k]=chip.dataset.v;
-        render(); return;
-      }
+      const cat=e.target.closest('#anCatBar [data-k="category"]');
+      if(cat){ state.category=cat.dataset.v; render(); return; }
       const br=e.target.closest('#anBreakTabs .chip');
       if(br){ state.breakdownView=br.dataset.v; render(); return; }
       const adBtn=e.target.closest('[data-ad]');
       if(adBtn){ openAd(adBtn.dataset.ad); return; }
       const jump=e.target.closest('[data-jump]');
       if(jump){ jumpFilter(jump.dataset.jump); return; }
+      if(e.target.id==='anScopeBtn'){
+        $('anScopePanel')?.classList.toggle('on');
+        return;
+      }
+      if(e.target.id==='anReset'){
+        state.category='all'; state.avatar='all'; state.angle='all'; state.minSpend=500; state.scope='swipe';
+        $('anScopePanel')?.classList.remove('on');
+        render(); return;
+      }
     });
-    ['anMinSpend','anScope','anRegionMin','anRegionSort','anRegionMode'].forEach(id=>{
+    ['anAvatarSel','anAngleSel','anMinSpend','anScope','anRegionMin','anRegionSort','anRegionMode'].forEach(id=>{
       $(id)?.addEventListener('change', ()=>{
+        state.avatar=$('anAvatarSel')?.value || 'all';
+        state.angle=$('anAngleSel')?.value || 'all';
         state.minSpend=Number($('anMinSpend').value||0);
         state.scope=$('anScope').value;
-        state.regionMin=Number($('anRegionMin').value||0);
-        state.regionSort=$('anRegionSort').value;
-        state.regionMode=$('anRegionMode').value;
+        state.regionMin=Number($('anRegionMin')?.value||0);
+        state.regionSort=$('anRegionSort')?.value || 'cpl';
+        state.regionMode=$('anRegionMode')?.value || 'winners';
         render();
       });
     });

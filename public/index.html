@@ -214,63 +214,178 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
 .dualcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:1000px){.dualcols{grid-template-columns:1fr}}
 
+
+/* ===== Clean Linear/Motion filter system ===== */
+header.top{position:sticky;top:0;z-index:40;padding:10px 14px 8px;background:rgba(11,18,32,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-row{align-items:flex-start;gap:8px}
+.brand h1{font-size:16px;font-weight:750}
+.brand .sub{display:none}
+.utilinks{display:flex;gap:10px;align-items:center;flex-shrink:0}
+.utilinks a{color:#94a3b8;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap}
+.utilinks a:hover{color:#e2e8f0;text-decoration:underline}
+.tabswitch{display:flex;width:100%;max-width:520px;margin:8px 0 0;border:1px solid #334155;border-radius:10px;overflow:hidden}
+.tabswitch button{flex:1;background:#1e293b;color:#94a3b8;border:0;padding:8px 10px;font-size:12.5px;cursor:pointer;font-weight:650}
+.tabswitch button.on{background:#fff;color:#0f172a}
+.toplinks{display:none !important} /* replaced by utilinks */
+header.top .kpis{display:none !important} /* board KPIs move into metric strip */
+
+ .filters{position:relative;z-index:20;background:rgba(11,18,32,.96);border-bottom:1px solid var(--line);padding:8px 14px 10px}
+#panelAnalytics .filters{position:relative}
+.filters-inner{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.flabel{font-size:10px;font-weight:700;letter-spacing:.55px;text-transform:uppercase;color:#64748b;margin:0 0 4px}
+.hscroll{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:1px}
+.hscroll::-webkit-scrollbar{display:none}
+.segchip{flex:0 0 auto;border:1px solid #334155;background:#1e293b;color:#cbd5e1;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:12.5px;font-weight:600;white-space:nowrap}
+.segchip.on{background:#fff;color:#0f172a;border-color:#fff}
+.segchip .tag{display:inline-block;margin-left:6px;font-size:9.5px;font-weight:700;letter-spacing:.3px;color:#64748b;background:#0f172a;border:1px solid #334155;border-radius:999px;padding:1px 6px;vertical-align:middle}
+.segchip.on .tag{color:#475569;background:#e2e8f0;border-color:#e2e8f0}
+
+.selectgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:900px){.selectgrid.cols4{grid-template-columns:repeat(4,1fr)}}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:10px;font-weight:700;letter-spacing:.55px;text-transform:uppercase;color:#64748b}
+.field select,.field input[type=search],.compact-search{
+  width:100%;border:1px solid #334155;background:#0f172a;color:#e2e8f0;border-radius:10px;
+  padding:8px 10px;font-size:13px;min-width:0
+}
+.segfmt{display:inline-flex;border:1px solid #334155;border-radius:10px;overflow:hidden;width:100%}
+.segfmt button{flex:1;background:#0f172a;color:#94a3b8;border:0;padding:8px 6px;font-size:12.5px;cursor:pointer;font-weight:650}
+.segfmt button.on{background:#fff;color:#0f172a}
+
+.scopebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.scopechip{border:1px solid #334155;background:#111827;color:#cbd5e1;border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;font-weight:600}
+.scopechip:hover{border-color:#475569}
+.scopepanel{display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border:1px solid #243044;border-radius:12px;background:#0f172a}
+.scopepanel.on{display:grid}
+.resetlink{margin-left:auto;background:transparent;border:0;color:#60a5fa;font-size:12px;font-weight:700;cursor:pointer;padding:0}
+.resetlink[hidden]{display:none}
+
+.metricstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin:0 0 12px;box-shadow:var(--shadow)}
+.metricstrip .m{min-width:0}
+.metricstrip .ml{font-size:10px;font-weight:700;letter-spacing:.45px;text-transform:uppercase;color:#64748b}
+.metricstrip .mv{font-size:16px;font-weight:750;margin-top:2px;font-variant-numeric:tabular-nums;color:#f8fafc;line-height:1.15}
+.metricstrip .mv.accent{color:#4ade80}
+.metricstrip .ms{font-size:10.5px;color:#94a3b8;margin-top:2px}
+@media(max-width:420px){.metricstrip .mv{font-size:14px}}
+
+.board-tools{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;align-items:end}
+@media(max-width:700px){.board-tools{grid-template-columns:1fr}}
+.morepanel{display:none;grid-template-columns:1fr 1fr;gap:8px;padding:8px;border:1px solid #243044;border-radius:12px;background:#0f172a}
+.morepanel.on{display:grid}
+@media(min-width:900px){.morepanel.on{grid-template-columns:repeat(4,1fr)}}
+
+/* hide legacy noisy rows if any remain */
+#acctRow,#tierRow,#fmtRow,#anCat,#anAvatar,#anAngle{display:none !important}
+.old-kpi-pills{display:none !important}
+
+
+@media(max-width:700px){
+  .board-tier-sort{display:none !important}
+  .morepanel.on{grid-template-columns:1fr 1fr}
+  .selectgrid{grid-template-columns:1fr 1fr !important}
+}
+.metricstrip{margin-top:10px}
+
 </style>
 </head>
 <body>
 <header class="top">
   <div class="top-row">
     <div class="brand">
-      <h1>Lead Lab · Creative Swipe Board</h1>
-      <div class="sub" id="sub">Loading creatives…</div>
-      <div class="tabswitch" id="tabSwitch" role="tablist" aria-label="Board sections">
-        <button type="button" class="on" data-tab="board" id="tabBoardBtn">Swipe Board</button>
-        <button type="button" data-tab="analytics" id="tabAnalyticsBtn">Creative Analytics</button>
-      </div>
+      <h1>Lead Lab</h1>
+      <div class="sub" id="sub" hidden>Loading</div>
     </div>
-    <div class="toplinks" id="toplinks"></div>
+    <div class="utilinks" id="toplinks"></div>
   </div>
-  <div class="kpis" id="kpis"></div>
+  <div class="tabswitch" id="tabSwitch" role="tablist" aria-label="Board sections">
+    <button type="button" class="on" data-tab="board" id="tabBoardBtn">Swipe Board</button>
+    <button type="button" data-tab="analytics" id="tabAnalyticsBtn">Creative Analytics</button>
+  </div>
+  <div class="kpis" id="kpis" hidden></div>
 </header>
 
 <div class="panel on" id="panelBoard">
 <section class="filters" id="boardFilters">
   <div class="filters-inner">
-    <div class="row" id="acctRow">
-      <span class="lbl">Account</span>
+    <div>
+      <div class="flabel">Category</div>
+      <div class="hscroll" id="boardCat"></div>
     </div>
-    <div class="row" id="tierRow">
-      <span class="lbl">Tier</span>
+    <div class="board-tools">
+      <div class="field">
+        <label for="q">Search</label>
+        <input class="compact-search" id="q" type="search" placeholder="Search name, copy, angle, state, ad id" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Format</label>
+        <div class="segfmt" id="boardFmt">
+          <button type="button" class="on" data-v="all">All</button>
+          <button type="button" data-v="video">Video</button>
+          <button type="button" data-v="static">Static</button>
+        </div>
+      </div>
     </div>
-    <div class="row" id="fmtRow">
-      <span class="lbl">Format</span>
+    <div class="scopebar">
+      <button type="button" class="scopechip" id="boardMoreBtn">Tier · Sort · More ▾</button>
+      <button type="button" class="resetlink" id="boardReset" hidden>Reset</button>
     </div>
-    <div class="row">
-      <span class="lbl">More</span>
-      <select class="sel" id="styleSel"><option value="">All angles / styles</option></select>
-      <select class="sel" id="stateSel"><option value="">All states</option></select>
-      <select class="sel" id="spendSel">
-        <option value="0">Min spend: All</option>
-        <option value="500">$500+</option>
-        <option value="1000">$1k+</option>
-        <option value="2500">$2.5k+</option>
-        <option value="5000">$5k+</option>
-      </select>
-      <select class="sel" id="sortSel">
-        <option value="best">Best CPL (Top first)</option>
-        <option value="cpl">Lowest CPL</option>
-        <option value="spend">Highest Spend</option>
-        <option value="leads">Most Leads</option>
-        <option value="newest">Newest</option>
-      </select>
-      <label class="toggle" title="Hide Meta Page-locked still previews">
-        <input type="checkbox" id="playableOnly"> Playable media only
-      </label>
-      <input class="search" id="q" type="search" placeholder="Search name, copy, angle, state, ad id…" autocomplete="off">
+    <div class="morepanel" id="boardMore">
+      <div class="field">
+        <label for="tierSel">Tier</label>
+        <select id="tierSel">
+          <option value="all">All tiers</option>
+          <option value="top">Top Performers</option>
+          <option value="middle">Middle</option>
+          <option value="lower">Lower</option>
+          <option value="low_spend">Low Spend</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sortSel">Sort</label>
+        <select id="sortSel">
+          <option value="best">Best CPL (Top first)</option>
+          <option value="cpl">Lowest CPL</option>
+          <option value="spend">Highest Spend</option>
+          <option value="leads">Most Leads</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="styleSel">Style / Angle</label>
+        <select id="styleSel"><option value="">All styles</option></select>
+      </div>
+      <div class="field">
+        <label for="stateSel">State</label>
+        <select id="stateSel"><option value="">All states</option></select>
+      </div>
+      <div class="field">
+        <label for="spendSel">Min spend</label>
+        <select id="spendSel">
+          <option value="0">All</option>
+          <option value="500">$500+</option>
+          <option value="1000">$1k+</option>
+          <option value="2500">$2.5k+</option>
+          <option value="5000">$5k+</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="playableOnly">Media</label>
+        <select id="playableOnlySel">
+          <option value="0">All media</option>
+          <option value="1">Playable media only</option>
+        </select>
+        <input type="checkbox" id="playableOnly" hidden>
+      </div>
     </div>
+    <!-- legacy hidden mounts so old JS lookups do not crash -->
+    <div id="acctRow" hidden></div>
+    <div id="tierRow" hidden></div>
+    <div id="fmtRow" hidden></div>
   </div>
 </section>
 
 <main>
+  <div class="metricstrip" id="boardMetrics"></div>
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty" style="display:none"><b>No creatives match</b>Try clearing a filter or search.</div>
 </main>
@@ -279,28 +394,52 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
 
 <div class="panel" id="panelAnalytics">
   <section class="filters" id="analyticsFilters">
-    <div class="filters-inner">
-      <div class="row" id="anCat"><span class="lbl">Category</span></div>
-      <div class="row" id="anAvatar"><span class="lbl">Avatar</span></div>
-      <div class="row" id="anAngle"><span class="lbl">Angle</span></div>
-      <div class="row">
-        <span class="lbl">Scope</span>
-        <select class="sel" id="anScope">
-          <option value="swipe">Swipe set (681 curated)</option>
-          <option value="full">Show full-account snapshot too</option>
-        </select>
-        <select class="sel" id="anMinSpend">
-          <option value="0">Min spend: All ads</option>
+  <div class="filters-inner">
+    <div>
+      <div class="flabel">Category</div>
+      <div class="hscroll" id="anCatBar"></div>
+    </div>
+    <div class="selectgrid">
+      <div class="field">
+        <label for="anAvatarSel">Format / Avatar</label>
+        <select id="anAvatarSel"></select>
+      </div>
+      <div class="field">
+        <label for="anAngleSel">Messaging Angle</label>
+        <select id="anAngleSel"></select>
+      </div>
+    </div>
+    <div class="scopebar">
+      <button type="button" class="scopechip" id="anScopeBtn">Scope: $500+ · Swipe set ▾</button>
+      <button type="button" class="resetlink" id="anReset" hidden>Reset</button>
+    </div>
+    <div class="scopepanel" id="anScopePanel">
+      <div class="field">
+        <label for="anMinSpend">Min spend</label>
+        <select id="anMinSpend">
+          <option value="0">All ads</option>
           <option value="100">$100+</option>
           <option value="500" selected>$500+</option>
           <option value="1000">$1,000+</option>
           <option value="2500">$2,500+</option>
         </select>
       </div>
+      <div class="field">
+        <label for="anScope">Dataset</label>
+        <select id="anScope">
+          <option value="swipe">Curated swipe set (681)</option>
+          <option value="full">Also show full-account snapshot</option>
+        </select>
+      </div>
     </div>
-  </section>
+    <!-- legacy mounts -->
+    <div id="anCat" hidden></div>
+    <div id="anAvatar" hidden></div>
+    <div id="anAngle" hidden></div>
+  </div>
+</section>
   <main>
-    <div class="kpis" id="anKpis" style="margin:0 0 12px"></div>
+    <div class="metricstrip" id="anKpis"></div>
     <div class="takeaway" id="anTakeaway"></div>
     <div class="fullstrip" id="anFullStrip"></div>
 
@@ -473,71 +612,98 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     history.replaceState(null,'', qs? ('?'+qs) : location.pathname);
   }
 
-  function chip(label, on, attrs){
-    const b=document.createElement('button');
-    b.type='button'; b.className='chip'+(on?' on':''); b.textContent=label;
-    Object.entries(attrs||{}).forEach(([k,v])=>b.dataset[k]=v);
-    return b;
+  function catKey(){
+    if(state.trucker) return 'trucker';
+    return state.account || 'all';
   }
-
+  function setCategory(key){
+    if(key==='trucker'){ state.account='iul'; state.trucker=true; }
+    else { state.account=key; state.trucker=false; }
+  }
+  function isBoardDirty(){
+    return catKey()!=='all' || state.tier!=='all' || state.format!=='all' || !!state.style || !!state.geo || !!state.minSpend || state.sort!=='best' || !!state.q || state.playableOnly;
+  }
   function buildFilterBar(){
-    const acct=$('acctRow');
-    [['all','All Accounts'],['final_expense','Final Expense'],['mortgage_protection','Mortgage Protection'],['iul','IUL']]
-      .forEach(([v,l])=>acct.appendChild(chip(l, state.account===v, {k:'account',v})));
-    const niche=chip('Trucker (CDL)', state.trucker, {k:'trucker',v:'1'});
-    niche.classList.add('niche','soft'); if(state.account==='all'||state.account==='iul') niche.classList.add('show');
-    acct.appendChild(niche);
+    const cats=[
+      ['all','All'],
+      ['final_expense','Final Expense'],
+      ['mortgage_protection','Mortgage Protection'],
+      ['iul','IUL'],
+      ['trucker','Trucker · CDL'],
+    ];
+    const bar=$('boardCat');
+    bar.innerHTML = cats.map(([v,l])=>{
+      const on = catKey()===v ? ' on' : '';
+      const tag = v==='trucker' ? '<span class="tag">IUL</span>' : '';
+      return `<button type="button" class="segchip${on}" data-cat="${v}">${l}${tag}</button>`;
+    }).join('');
+    bar.onclick = (e)=>{
+      const b=e.target.closest('[data-cat]'); if(!b) return;
+      setCategory(b.dataset.cat); render();
+    };
+    const active=bar.querySelector('.segchip.on');
+    if(active && active.scrollIntoView){ try{ active.scrollIntoView({inline:'center', block:'nearest', behavior:'instant'}); }catch(e){} }
 
-    const tier=$('tierRow');
-    [['all','All Tiers'],['top','Top Performers'],['middle','Middle'],['lower','Lower'],['low_spend','Low Spend']]
-      .forEach(([v,l])=>tier.appendChild(chip(l, state.tier===v, {k:'tier',v})));
-
-    const fmt=$('fmtRow');
-    [['all','All Formats'],['video','Video'],['static','Static']]
-      .forEach(([v,l])=>fmt.appendChild(chip(l, state.format===v, {k:'format',v})));
-
+    // populate style/state selects once
     const ss=$('styleSel');
-    (DATA.filters.styles||[]).forEach(s=>{
-      const o=document.createElement('option'); o.value=s; o.textContent=s; if(state.style===s) o.selected=true; ss.appendChild(o);
-    });
+    if(ss && ss.options.length<=1){
+      (DATA.filters.styles||[]).forEach(s=>{
+        const o=document.createElement('option'); o.value=s; o.textContent=s; ss.appendChild(o);
+      });
+    }
     const st=$('stateSel');
-    (DATA.filters.states||[]).forEach(s=>{
-      const o=document.createElement('option'); o.value=s; o.textContent=s; if(state.geo===s) o.selected=true; st.appendChild(o);
-    });
-    $('spendSel').value=String(state.minSpend||0);
-    $('sortSel').value=state.sort;
-    $('q').value=state.q;
-    $('playableOnly').checked=state.playableOnly;
+    if(st && st.options.length<=1){
+      (DATA.filters.states||[]).forEach(s=>{
+        const o=document.createElement('option'); o.value=s; o.textContent=s; st.appendChild(o);
+      });
+    }
+    $('tierSel').value = state.tier;
+    $('sortSel').value = state.sort;
+    $('spendSel').value = String(state.minSpend||0);
+    $('styleSel').value = state.style || '';
+    $('stateSel').value = state.geo || '';
+    $('q').value = state.q || '';
+    $('playableOnlySel').value = state.playableOnly ? '1' : '0';
+    $('playableOnly').checked = state.playableOnly;
+    document.querySelectorAll('#boardFmt button').forEach(b=> b.classList.toggle('on', b.dataset.v===state.format));
+    $('boardReset').hidden = !isBoardDirty();
 
-    document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
-      const k=b.dataset.k, v=b.dataset.v;
-      if(k==='trucker'){ state.trucker=!state.trucker; }
-      else { state[k]=v; if(k==='account'){ state.trucker=false; } }
-      syncChips(); render();
-    }));
-    ['styleSel','stateSel','spendSel','sortSel'].forEach(id=>{
-      $(id).addEventListener('change',()=>{
-        state.style=$('styleSel').value;
-        state.geo=$('stateSel').value;
-        state.minSpend=Number($('spendSel').value||0);
-        state.sort=$('sortSel').value;
+    // wire once
+    if(!buildFilterBar._wired){
+      buildFilterBar._wired = true;
+      $('boardFmt').addEventListener('click', (e)=>{
+        const b=e.target.closest('button[data-v]'); if(!b) return;
+        state.format=b.dataset.v; render();
+      });
+      ['tierSel','sortSel','spendSel','styleSel','stateSel','playableOnlySel'].forEach(id=>{
+        $(id).addEventListener('change', ()=>{
+          state.tier=$('tierSel').value;
+          state.sort=$('sortSel').value;
+          state.minSpend=Number($('spendSel').value||0);
+          state.style=$('styleSel').value;
+          state.geo=$('stateSel').value;
+          state.playableOnly=$('playableOnlySel').value==='1';
+          $('playableOnly').checked=state.playableOnly;
+          render();
+        });
+      });
+      let t=null;
+      $('q').addEventListener('input', ()=>{
+        clearTimeout(t); t=setTimeout(()=>{ state.q=$('q').value.trim(); render(); }, 120);
+      });
+      $('boardMoreBtn').addEventListener('click', ()=>{
+        $('boardMore').classList.toggle('on');
+        const open=$('boardMore').classList.contains('on');
+        $('boardMoreBtn').textContent = open ? 'Tier · Sort · More ▴' : 'Tier · Sort · More ▾';
+      });
+      $('boardReset').addEventListener('click', ()=>{
+        state.account='all'; state.trucker=false; state.tier='all'; state.format='all';
+        state.style=''; state.geo=''; state.minSpend=0; state.sort='best'; state.q=''; state.playableOnly=false;
         render();
       });
-    });
-    $('playableOnly').addEventListener('change',()=>{ state.playableOnly=$('playableOnly').checked; render(); });
-    let t=null;
-    $('q').addEventListener('input',()=>{ clearTimeout(t); t=setTimeout(()=>{ state.q=$('q').value.trim(); render(); },120); });
+    }
   }
-
-  function syncChips(){
-    document.querySelectorAll('.chip').forEach(b=>{
-      const k=b.dataset.k, v=b.dataset.v;
-      if(k==='trucker'){
-        b.classList.toggle('on', state.trucker);
-        b.classList.toggle('show', state.account==='all'||state.account==='iul');
-      } else b.classList.toggle('on', state[k]===v);
-    });
-  }
+  function syncChips(){ /* no-op: buildFilterBar refreshes active states each render */ }
 
   function filtered(){
     const q=(state.q||'').toLowerCase();
@@ -580,22 +746,25 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
   }
 
   function renderKPIs(list){
-    const vids=list.filter(a=>a.media_kind==='video').length;
-    const stats=list.filter(a=>a.media_kind==='static').length;
-    const tops=list.filter(a=>a.tier==='top').length;
     const spend=list.reduce((x,a)=>x+a.spend,0);
-    const wcpl=weightedCPL(list);
-    $('kpis').innerHTML=[
-      ['Ads', list.length],
-      ['Playable videos', vids],
-      ['Statics', stats],
-      ['Top performers', tops],
-      ['Spend', moneyExact(spend)],
-      ['Weighted CPL', wcpl==null?'n/a':cplStr(wcpl)],
-    ].map(([l,v])=>`<div class="kpi">${l} <b>${v}</b></div>`).join('');
-    const gen=DATA.generated? new Date(DATA.generated) : null;
-    $('sub').textContent = list.length+' of '+(DATA.counts?.total||DATA.ads.length)+' creatives'
-      + (gen? ' · Updated '+gen.toLocaleString('en-US',{timeZone:'America/Denver', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'})+' MT' : '');
+    const leads=list.reduce((x,a)=>x+a.leads,0);
+    const wcpl = leads ? spend/leads : null;
+    const tops=list.filter(a=>a.tier==='top').length;
+    const hit = list.length ? tops/list.length : 0;
+    const moneyK = (n)=> n>=1000000 ? '$'+(n/1e6).toFixed(2).replace(/\.00$/,'')+'M' : n>=1000 ? '$'+(n/1000).toFixed(n>=10000?0:1).replace(/\.0$/,'')+'k' : '$'+Math.round(n);
+    const el=$('boardMetrics');
+    if(el){
+      el.innerHTML = `
+        <div class="m"><div class="ml">Spend</div><div class="mv">${moneyK(spend)}</div></div>
+        <div class="m"><div class="ml">Leads</div><div class="mv">${leads.toLocaleString()}</div></div>
+        <div class="m"><div class="ml">Avg CPL</div><div class="mv accent">${wcpl==null?'n/a':cplStr(wcpl)}</div></div>
+        <div class="m"><div class="ml">Winners</div><div class="mv">${tops} / ${list.length}</div><div class="ms">${Math.round(hit*100)}% hit rate</div></div>`;
+    }
+    // keep legacy header kpi hidden but updated for compatibility
+    const legacy=$('kpis');
+    if(legacy){ legacy.innerHTML=''; legacy.hidden=true; }
+    const sub=$('sub');
+    if(sub){ sub.textContent = list.length+' of '+(DATA.counts?.total||DATA.ads.length)+' creatives'; }
   }
 
   function cardHTML(a){
@@ -731,8 +900,8 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
   // header links
   const links=DATA.links||{};
   $('toplinks').innerHTML = [
-    links.drive? `<a href="${links.drive}" target="_blank" rel="noopener">Google Drive folder</a>`:'',
-    links.sheet? `<a href="${links.sheet}" target="_blank" rel="noopener">Ranked Top Performers</a>`:'',
+    links.drive? `<a href="${links.drive}" target="_blank" rel="noopener">Drive ↗</a>`:'',
+    links.sheet? `<a href="${links.sheet}" target="_blank" rel="noopener">Sheet ↗</a>`:'',
   ].join('');
 
   window.openBoardDetails = openDetails;
@@ -759,10 +928,8 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     bBtn?.classList.toggle('on', onBoard);
     aBtn?.classList.toggle('on', !onBoard);
     document.getElementById('boardFilters')?.style && (document.getElementById('boardFilters').style.display = onBoard ? '' : 'none');
-    const boardKpis=document.getElementById('kpis');
-    if(boardKpis) boardKpis.style.display = onBoard ? '' : 'none';
-    const boardSub=document.getElementById('sub');
-    if(boardSub && !onBoard) boardSub.textContent = 'Motion-style creative performance report · bundled offline data';
+    const boardMetrics=document.getElementById('boardMetrics');
+    if(boardMetrics) boardMetrics.style.display = onBoard ? '' : 'none';
     // KPI row in header is board-specific; keep visible always but sub text updates per tab
     const p = new URLSearchParams(location.search);
     p.set('tab', onBoard ? 'board' : 'analytics');
