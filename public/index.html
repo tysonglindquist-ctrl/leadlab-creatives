@@ -156,6 +156,64 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
   .metrics{width:100%;margin-left:0}
   .lbl{display:none}
 }
+
+/* Tabs */
+.tabswitch{display:inline-flex;border:1px solid #334155;border-radius:10px;overflow:hidden;margin-left:8px}
+.tabswitch button{background:#1e293b;color:#94a3b8;border:0;padding:7px 14px;font-size:13px;cursor:pointer;font-weight:600}
+.tabswitch button.on{background:#fff;color:#0f172a}
+.panel{display:none}.panel.on{display:block}
+#panelAnalytics .filters{position:sticky;top:64px}
+.takeaway{background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.take-title{font-weight:700;font-size:14px;margin-bottom:8px;color:#e2e8f0}
+.takeaway ul{margin:0;padding-left:18px;color:#cbd5e1;font-size:13.5px;line-height:1.55}
+.takeaway li{margin:0 0 6px}
+.take-note{margin-top:8px;font-size:11.5px;color:#94a3b8}
+.fmtpair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:900px){.fmtpair{grid-template-columns:1fr}}
+.fmtcol{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
+.fmtcol.win{border-color:#166534;box-shadow:0 0 0 1px #166534 inset}
+.fmthead{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.winbadge{background:#14532d;color:#bbf7d0;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+.fmtgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mcard{background:#0f172a;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.mcard .ml{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.3px}
+.mcard .mv{font-size:16px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.mcard .ms{font-size:11px;color:var(--faint);margin-top:2px}
+.p-vid{background:#1e3a8a;color:#bfdbfe}.p-stat{background:#334155;color:#e2e8f0}
+.fmtthumbs{margin-top:10px}.fmtthumbs .ml{font-size:11px;color:var(--mut);margin-bottom:6px}
+.thumbs{display:flex;gap:6px}
+.thumbs .thumb,.winthumb{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid var(--line);padding:0;background:#0a0f1a;cursor:pointer}
+.thumbs .thumb img,.winthumb img{width:100%;height:100%;object-fit:cover}
+.thumbs .ph,.winthumb .ph{display:block;width:100%;height:100%;background:#1e293b}
+.fullstrip{display:none;background:#111827;border:1px dashed #475569;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#cbd5e1;margin:0 0 14px;line-height:1.45}
+.secbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 0 14px}
+.secbox h2{margin:0 0 10px;font-size:15px}
+.secbox h3{margin:0 0 8px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+.an-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.an-table th,.an-table td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+.an-table th{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.3px}
+.an-table td.l,.an-table th.l{text-align:left}
+.an-table .bname{font-weight:650;font-size:12.5px;margin-top:4px}
+.an-table .mut{color:var(--mut);font-size:11px}
+.an-table .good{color:#4ade80}.an-table .mid{color:#fbbf24}.an-table .bad{color:#f87171}
+.barwrap{display:flex;align-items:center;gap:8px;min-width:120px}
+.barwrap .bar{height:8px;background:linear-gradient(90deg,#2563eb,#60a5fa);border-radius:99px}
+.barwrap span{font-variant-numeric:tabular-nums;font-size:12px}
+.linkish{background:transparent;border:0;color:var(--ty);cursor:pointer;font-weight:700;padding:0}
+.snapgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.snapgrid{grid-template-columns:1fr}}
+.snaprow{display:grid;grid-template-columns:1.2fr 1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}
+@media(max-width:700px){.snaprow{grid-template-columns:1fr;}}
+.snapl{color:#e2e8f0;font-weight:600}.snapr{color:var(--mut);text-align:right;font-variant-numeric:tabular-nums}
+.monthrow{display:flex;gap:6px;align-items:flex-end;overflow:auto;padding-top:8px;min-height:110px}
+.monthcol{flex:1;min-width:42px;text-align:center}
+.mbar{background:linear-gradient(180deg,#60a5fa,#1d4ed8);border-radius:6px 6px 2px 2px;margin:0 auto;width:70%}
+.mlbl{font-size:10px;color:var(--mut);margin-top:4px}.msub{font-size:10px;color:#cbd5e1}
+.winthumb{width:48px;height:48px;float:left;margin-right:8px}
+.notechip{font-size:11.5px;color:#94a3b8;margin:0 0 8px;line-height:1.4}
+.dualcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:1000px){.dualcols{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -164,13 +222,18 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     <div class="brand">
       <h1>Lead Lab · Creative Swipe Board</h1>
       <div class="sub" id="sub">Loading creatives…</div>
+      <div class="tabswitch" id="tabSwitch" role="tablist" aria-label="Board sections">
+        <button type="button" class="on" data-tab="board" id="tabBoardBtn">Swipe Board</button>
+        <button type="button" data-tab="analytics" id="tabAnalyticsBtn">Creative Analytics</button>
+      </div>
     </div>
     <div class="toplinks" id="toplinks"></div>
   </div>
   <div class="kpis" id="kpis"></div>
 </header>
 
-<section class="filters">
+<div class="panel on" id="panelBoard">
+<section class="filters" id="boardFilters">
   <div class="filters-inner">
     <div class="row" id="acctRow">
       <span class="lbl">Account</span>
@@ -211,6 +274,129 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
   <div class="grid" id="grid"></div>
   <div class="empty" id="empty" style="display:none"><b>No creatives match</b>Try clearing a filter or search.</div>
 </main>
+</div><!-- /panelBoard -->
+
+
+<div class="panel" id="panelAnalytics">
+  <section class="filters" id="analyticsFilters">
+    <div class="filters-inner">
+      <div class="row" id="anCat"><span class="lbl">Category</span></div>
+      <div class="row" id="anAvatar"><span class="lbl">Avatar</span></div>
+      <div class="row" id="anAngle"><span class="lbl">Angle</span></div>
+      <div class="row">
+        <span class="lbl">Scope</span>
+        <select class="sel" id="anScope">
+          <option value="swipe">Swipe set (681 curated)</option>
+          <option value="full">Show full-account snapshot too</option>
+        </select>
+        <select class="sel" id="anMinSpend">
+          <option value="0">Min spend: All ads</option>
+          <option value="100">$100+</option>
+          <option value="500" selected>$500+</option>
+          <option value="1000">$1,000+</option>
+          <option value="2500">$2,500+</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <main>
+    <div class="kpis" id="anKpis" style="margin:0 0 12px"></div>
+    <div class="takeaway" id="anTakeaway"></div>
+    <div class="fullstrip" id="anFullStrip"></div>
+
+    <div class="secbox">
+      <h2>Creative format head-to-head · Video vs Static</h2>
+      <div class="fmtpair" id="anFormat"></div>
+    </div>
+
+    <div class="secbox">
+      <h2>Avatar / style · Angle · Video length</h2>
+      <div class="row" id="anBreakTabs" style="margin-bottom:10px">
+        <button type="button" class="chip on" data-v="avatar">By Avatar / Style</button>
+        <button type="button" class="chip" data-v="angle">By Messaging Angle</button>
+        <button type="button" class="chip" data-v="duration">By Video Length</button>
+      </div>
+      <div style="overflow:auto">
+        <table class="an-table">
+          <thead><tr>
+            <th class="l">Bucket</th><th>Ads</th><th>Hit rate</th><th class="l">Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th></th>
+          </tr></thead>
+          <tbody id="anBreakBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="secbox">
+      <h2>Top performing states and geo</h2>
+      <p class="notechip" id="anRegionNote"></p>
+      <div class="row" style="margin-bottom:10px">
+        <select class="sel" id="anRegionMin">
+          <option value="500">State min spend $500+</option>
+          <option value="1000" selected>State min spend $1,000+</option>
+          <option value="2500">State min spend $2,500+</option>
+          <option value="5000">State min spend $5,000+</option>
+        </select>
+        <select class="sel" id="anRegionSort">
+          <option value="cpl">Sort: Lowest CPL / efficiency</option>
+          <option value="leads">Sort: Most leads</option>
+          <option value="spend">Sort: Highest spend</option>
+        </select>
+        <select class="sel" id="anRegionMode">
+          <option value="winners">View: Top winners</option>
+          <option value="bleeders">View: Budget bleeders (high CPL)</option>
+        </select>
+      </div>
+      <div class="dualcols">
+        <div>
+          <h3>Meta state delivery (account breakdown)</h3>
+          <div style="overflow:auto">
+            <table class="an-table">
+              <thead><tr><th>#</th><th class="l">State</th><th>Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th>CPM</th></tr></thead>
+              <tbody id="anMetaStates"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3>State-callout creatives (from ad naming / geo tags)</h3>
+          <div style="overflow:auto">
+            <table class="an-table">
+              <thead><tr><th>#</th><th class="l">State</th><th>Ads</th><th>Spend</th><th>Leads</th><th>CPL</th></tr></thead>
+              <tbody id="anCalloutStates"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="secbox">
+      <h2>Placement · Age / gender · Monthly trend</h2>
+      <div class="snapgrid">
+        <div>
+          <h3>Placement mix</h3>
+          <div id="anPlacement"></div>
+        </div>
+        <div>
+          <h3>Age / gender pockets</h3>
+          <div id="anAgeGender"></div>
+        </div>
+      </div>
+      <h3 style="margin-top:14px">Monthly spend and CPL</h3>
+      <div class="monthrow" id="anMonthly"></div>
+    </div>
+
+    <div class="secbox">
+      <h2>Top 10 creative winners</h2>
+      <div style="overflow:auto">
+        <table class="an-table">
+          <thead><tr>
+            <th>#</th><th class="l">Creative</th><th>Format</th><th class="l">Angle</th><th>Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th></th>
+          </tr></thead>
+          <tbody id="anWinners"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
 
 <div id="ov"><div id="dw" role="dialog" aria-modal="true">
   <div class="dh"><h3 id="dTitle"></h3><button class="x" id="dClose" aria-label="Close">Close</button></div>
@@ -220,6 +406,8 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
 
 <script>window.MEDIA_BASE="https://leadlab-creatives.pages.dev/media";</script>
 <script src="data.js"></script>
+<script src="analytics.js"></script>
+<script src="analytics_ui.js"></script>
 <script>
 (function(){
   const DATA = window.BOARD_DATA || {ads:[],links:{},counts:{},filters:{styles:[],states:[]}};
@@ -266,7 +454,11 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     if(p.get('playable')==='1') state.playableOnly=true;
   }
   function writeURL(){
+    const curTab=(new URLSearchParams(location.search)).get('tab')||'board';
+    if(curTab==='analytics') return;
     const p=new URLSearchParams();
+    const tab=curTab;
+    if(tab) p.set('tab', tab);
     if(state.account!=='all') p.set('account',state.account);
     if(state.tier!=='all') p.set('tier',state.tier);
     if(state.format!=='all') p.set('format',state.format);
@@ -543,10 +735,58 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
     links.sheet? `<a href="${links.sheet}" target="_blank" rel="noopener">Ranked Top Performers</a>`:'',
   ].join('');
 
+  window.openBoardDetails = openDetails;
   parseURL();
   buildFilterBar();
   render();
+  window.__boardRender = render;
 })();
 </script>
+
+<script>
+(function(){
+  function currentTab(){
+    return new URLSearchParams(location.search).get('tab') || 'board';
+  }
+  function setTab(tab, push){
+    const board = document.getElementById('panelBoard');
+    const analytics = document.getElementById('panelAnalytics');
+    const bBtn = document.getElementById('tabBoardBtn');
+    const aBtn = document.getElementById('tabAnalyticsBtn');
+    const onBoard = tab !== 'analytics';
+    board?.classList.toggle('on', onBoard);
+    analytics?.classList.toggle('on', !onBoard);
+    bBtn?.classList.toggle('on', onBoard);
+    aBtn?.classList.toggle('on', !onBoard);
+    document.getElementById('boardFilters')?.style && (document.getElementById('boardFilters').style.display = onBoard ? '' : 'none');
+    // KPI row in header is board-specific; keep visible always but sub text updates per tab
+    const p = new URLSearchParams(location.search);
+    p.set('tab', onBoard ? 'board' : 'analytics');
+    if(onBoard){
+      // drop analytics-only keys
+      ['category','avatar','angle','scope','regionMin','regionSort','regionMode','breakdown'].forEach(k=>p.delete(k));
+    }
+    const qs = p.toString();
+    history.replaceState(null, '', qs ? ('?'+qs) : location.pathname);
+    if(!onBoard && typeof window.initAnalytics === 'function'){
+      if(!window.__analyticsReady){ window.initAnalytics(); window.__analyticsReady = true; }
+      else if(typeof window.renderAnalytics === 'function') window.renderAnalytics();
+    }
+    // update counts in tab labels
+    try{
+      const n = (window.BOARD_DATA&&window.BOARD_DATA.ads||[]).length;
+      if(bBtn) bBtn.textContent = 'Swipe Board ('+n+')';
+      if(aBtn) aBtn.textContent = 'Creative Analytics';
+    }catch(e){}
+  }
+  document.getElementById('tabSwitch')?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('[data-tab]');
+    if(!btn) return;
+    setTab(btn.dataset.tab, true);
+  });
+  setTab(currentTab(), false);
+})();
+</script>
+
 </body>
 </html>
