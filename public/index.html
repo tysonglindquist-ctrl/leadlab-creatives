@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1220">
+<title>Lead Lab · Creative Swipe Board</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --bg:#0b1220; --bg2:#111827; --card:#151c2c; --card2:#1a2336;
+  --ink:#f1f5f9; --mut:#94a3b8; --faint:#64748b; --line:#243044;
+  --ty:#60a5fa; --gold:#C79B66; --good:#22c55e; --bad:#f87171; --amber:#f59e0b;
+  --chip:#1e293b; --shadow:0 8px 28px rgba(0,0,0,.35);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+a{color:var(--ty);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit}
+img,video{max-width:100%;display:block}
+header.top{
+  position:sticky;top:0;z-index:40;background:rgba(11,18,32,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);padding:12px 16px;
+}
+.top-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;max-width:1440px;margin:0 auto}
+.brand h1{margin:0;font-size:17px;font-weight:700;letter-spacing:.2px}
+.brand .sub{color:var(--mut);font-size:12px;margin-top:2px}
+.toplinks{display:flex;gap:8px;flex-wrap:wrap}
+.toplinks a{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
+  background:var(--chip);border:1px solid var(--line);color:#e2e8f0;font-size:12px;font-weight:600
+}
+.toplinks a:hover{border-color:#475569;text-decoration:none;background:#243044}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;max-width:1440px;margin:10px auto 0}
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+  font-size:12px;color:var(--mut);display:inline-flex;gap:6px;align-items:center
+}
+.kpi b{color:var(--ink);font-variant-numeric:tabular-nums}
+.filters{
+  position:sticky;top:64px;z-index:30;background:rgba(11,18,32,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding:10px 16px 12px
+}
+.filters-inner{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lbl{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.4px;margin-right:4px;min-width:52px}
+.chip,.sel,.search{
+  border:1px solid var(--line);background:var(--chip);color:#e2e8f0;border-radius:999px;
+  padding:6px 12px;cursor:pointer;font-size:12.5px
+}
+.chip.on{background:#fff;color:#0f172a;border-color:#fff;font-weight:700}
+.chip.soft.on{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.sel{border-radius:10px;padding:6px 10px;background:#0f172a}
+.search{flex:1;min-width:180px;border-radius:10px;padding:7px 12px;background:#0f172a}
+.toggle{
+  display:inline-flex;align-items:center;gap:6px;color:var(--mut);font-size:12px;
+  border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:var(--chip);cursor:pointer;user-select:none
+}
+.toggle input{accent-color:var(--ty)}
+.niche{display:none}.niche.show{display:inline-flex}
+main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px
+}
+@media(min-width:1100px){.grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);
+  transition:transform .12s,border-color .12s
+}
+.card:hover{border-color:#334155;transform:translateY(-1px)}
+.card-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 10px 8px}
+.pill{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
+.p-acct{background:#1e293b;color:#cbd5e1;border:1px solid #334155}
+.p-top{background:#14532d;color:#bbf7d0}.p-middle{background:#1e3a8a;color:#bfdbfe}
+.p-lower{background:#78350f;color:#fde68a}.p-low_spend{background:#334155;color:#cbd5e1}
+.metrics{margin-left:auto;display:flex;gap:8px;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+.metrics b{color:var(--ink)}
+.stage{position:relative;background:#0a0f1a;aspect-ratio:1/1;overflow:hidden;cursor:pointer}
+.stage img.thumb,.stage video{
+  width:100%;height:100%;object-fit:cover;background:#0a0f1a
+}
+.stage .play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35))
+}
+.stage .play .btn{
+  width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);color:#0f172a;
+  display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 6px 20px rgba(0,0,0,.35)
+}
+.stage .dur{
+  position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.7);color:#fff;
+  font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;font-variant-numeric:tabular-nums
+}
+.stage .lock{
+  position:absolute;left:8px;bottom:8px;background:rgba(15,23,42,.85);color:#fde68a;
+  border:1px solid #92400e;font-size:10px;font-weight:700;padding:3px 7px;border-radius:999px
+}
+.card-bot{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-bot .name{font-weight:700;font-size:13.5px;line-height:1.3;cursor:pointer}
+.card-bot .name:hover{color:#93c5fd}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:10.5px;padding:2px 7px;border-radius:6px;background:#0f172a;color:var(--mut);border:1px solid var(--line)}
+.preview{color:var(--mut);font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.actions{display:flex;gap:6px;margin-top:auto;padding-top:4px}
+.actions button,.actions a.btn{
+  flex:1;text-align:center;border:1px solid var(--line);background:#0f172a;color:#e2e8f0;
+  border-radius:8px;padding:6px 8px;font-size:11.5px;font-weight:600;cursor:pointer
+}
+.actions button:hover,.actions a.btn:hover{border-color:#475569;background:#1e293b;text-decoration:none}
+.empty{text-align:center;color:var(--mut);padding:48px 16px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+
+/* Drawer */
+#ov{position:fixed;inset:0;background:rgba(2,6,23,.72);z-index:60;display:none;justify-content:flex-end}
+#ov.on{display:flex}
+#dw{
+  background:var(--bg2);width:min(1100px,100%);height:100%;display:flex;flex-direction:column;
+  box-shadow:-12px 0 40px rgba(0,0,0,.45);border-left:1px solid var(--line)
+}
+#dw .dh{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:#0b1220}
+#dw .dh h3{margin:0;font-size:15px;flex:1;line-height:1.3}
+#dw .x,#dw .btn{
+  background:var(--chip);color:#e2e8f0;border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer
+}
+#dw .db{overflow:auto;padding:14px;flex:1}
+.dgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+@media(max-width:860px){.dgrid{grid-template-columns:1fr}}
+.dmedia{background:#000;border-radius:14px;overflow:hidden;border:1px solid var(--line);min-height:280px;display:flex;align-items:center;justify-content:center}
+.dmedia video,.dmedia img{width:100%;max-height:70vh;object-fit:contain;background:#000}
+.dmeta .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.3px}
+.stat .v{font-size:18px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 10px;font-size:13px;margin:12px 0}
+.kv div:nth-child(odd){color:var(--mut)}
+.copybox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:8px}
+.copybox h4{margin:0 0 6px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.3px}
+.copybox p{margin:0;white-space:pre-wrap;font-size:13.5px;line-height:1.5}
+.dbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.dbtns button,.dbtns a{
+  background:#1d4ed8;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:700;font-size:13px;cursor:pointer
+}
+.dbtns a.sec,.dbtns button.sec{background:var(--chip);border:1px solid var(--line);color:#e2e8f0}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#fff;color:#0f172a;
+  padding:10px 14px;border-radius:999px;font-weight:700;font-size:13px;z-index:80;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);display:none
+}
+.toast.on{display:block}
+@media(max-width:700px){
+  header.top{padding:10px 12px}
+  .filters{top:56px;padding:8px 12px 10px}
+  .metrics{width:100%;margin-left:0}
+  .lbl{display:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <div class="brand">
+      <h1>Lead Lab · Creative Swipe Board</h1>
+      <div class="sub" id="sub">Loading creatives…</div>
+    </div>
+    <div class="toplinks" id="toplinks"></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+</header>
+
+<section class="filters">
+  <div class="filters-inner">
+    <div class="row" id="acctRow">
+      <span class="lbl">Account</span>
+    </div>
+    <div class="row" id="tierRow">
+      <span class="lbl">Tier</span>
+    </div>
+    <div class="row" id="fmtRow">
+      <span class="lbl">Format</span>
+    </div>
+    <div class="row">
+      <span class="lbl">More</span>
+      <select class="sel" id="styleSel"><option value="">All angles / styles</option></select>
+      <select class="sel" id="stateSel"><option value="">All states</option></select>
+      <select class="sel" id="spendSel">
+        <option value="0">Min spend: All</option>
+        <option value="500">$500+</option>
+        <option value="1000">$1k+</option>
+        <option value="2500">$2.5k+</option>
+        <option value="5000">$5k+</option>
+      </select>
+      <select class="sel" id="sortSel">
+        <option value="best">Best CPL (Top first)</option>
+        <option value="cpl">Lowest CPL</option>
+        <option value="spend">Highest Spend</option>
+        <option value="leads">Most Leads</option>
+        <option value="newest">Newest</option>
+      </select>
+      <label class="toggle" title="Hide Meta Page-locked still previews">
+        <input type="checkbox" id="playableOnly"> Playable media only
+      </label>
+      <input class="search" id="q" type="search" placeholder="Search name, copy, angle, state, ad id…" autocomplete="off">
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none"><b>No creatives match</b>Try clearing a filter or search.</div>
+</main>
+
+<div id="ov"><div id="dw" role="dialog" aria-modal="true">
+  <div class="dh"><h3 id="dTitle"></h3><button class="x" id="dClose" aria-label="Close">Close</button></div>
+  <div class="db" id="dBody"></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>window.MEDIA_BASE="https://leadlab-creatives.pages.dev/media";</script>
+<script src="data.js"></script>
+<script>
+(function(){
+  const DATA = window.BOARD_DATA || {ads:[],links:{},counts:{},filters:{styles:[],states:[]}};
+  const MEDIA_BASE = (window.MEDIA_BASE != null && window.MEDIA_BASE !== '')
+    ? String(window.MEDIA_BASE).replace(/\/$/,'')
+    : (DATA.media_base || './media').replace(/\/$/,'');
+
+  const state = {
+    account: 'all',
+    tier: 'all',
+    format: 'all',
+    trucker: false,
+    style: '',
+    geo: '',
+    minSpend: 0,
+    sort: 'best',
+    q: '',
+    playableOnly: false,
+  };
+
+  const $ = (id)=>document.getElementById(id);
+  const money = (n)=> n>=1000 ? '$'+(n/1000).toFixed(n>=10000?0:1).replace(/\.0$/,'')+'k' : '$'+Math.round(n);
+  const moneyExact = (n)=> '$'+Number(n||0).toLocaleString(undefined,{maximumFractionDigits:0});
+  const cplStr = (n)=> n==null ? 'n/a' : '$'+Number(n).toFixed(2);
+  const durStr = (s)=>{ if(!s&&s!==0) return ''; const m=Math.floor(s/60), ss=Math.round(s%60); return m+':'+String(ss).padStart(2,'0'); };
+  const mediaUrl = (rel)=> !rel ? '' : (rel.startsWith('http')? rel : MEDIA_BASE+'/'+rel.replace(/^\.?\/?media\//,'').replace(/^\//,''));
+
+  function toast(msg){
+    const t=$('toast'); t.textContent=msg; t.classList.add('on');
+    clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove('on'),1600);
+  }
+
+  function parseURL(){
+    const p=new URLSearchParams(location.search);
+    if(p.get('account')) state.account=p.get('account');
+    if(p.get('tier')) state.tier=p.get('tier');
+    if(p.get('format')) state.format=p.get('format');
+    if(p.get('style')) state.style=p.get('style');
+    if(p.get('state')) state.geo=p.get('state');
+    if(p.get('minSpend')) state.minSpend=Number(p.get('minSpend')||0);
+    if(p.get('sort')) state.sort=p.get('sort');
+    if(p.get('q')) state.q=p.get('q');
+    if(p.get('trucker')==='1') state.trucker=true;
+    if(p.get('playable')==='1') state.playableOnly=true;
+  }
+  function writeURL(){
+    const p=new URLSearchParams();
+    if(state.account!=='all') p.set('account',state.account);
+    if(state.tier!=='all') p.set('tier',state.tier);
+    if(state.format!=='all') p.set('format',state.format);
+    if(state.style) p.set('style',state.style);
+    if(state.geo) p.set('state',state.geo);
+    if(state.minSpend) p.set('minSpend',String(state.minSpend));
+    if(state.sort!=='best') p.set('sort',state.sort);
+    if(state.q) p.set('q',state.q);
+    if(state.trucker) p.set('trucker','1');
+    if(state.playableOnly) p.set('playable','1');
+    const qs=p.toString();
+    history.replaceState(null,'', qs? ('?'+qs) : location.pathname);
+  }
+
+  function chip(label, on, attrs){
+    const b=document.createElement('button');
+    b.type='button'; b.className='chip'+(on?' on':''); b.textContent=label;
+    Object.entries(attrs||{}).forEach(([k,v])=>b.dataset[k]=v);
+    return b;
+  }
+
+  function buildFilterBar(){
+    const acct=$('acctRow');
+    [['all','All Accounts'],['final_expense','Final Expense'],['mortgage_protection','Mortgage Protection'],['iul','IUL']]
+      .forEach(([v,l])=>acct.appendChild(chip(l, state.account===v, {k:'account',v})));
+    const niche=chip('Trucker (CDL)', state.trucker, {k:'trucker',v:'1'});
+    niche.classList.add('niche','soft'); if(state.account==='all'||state.account==='iul') niche.classList.add('show');
+    acct.appendChild(niche);
+
+    const tier=$('tierRow');
+    [['all','All Tiers'],['top','Top Performers'],['middle','Middle'],['lower','Lower'],['low_spend','Low Spend']]
+      .forEach(([v,l])=>tier.appendChild(chip(l, state.tier===v, {k:'tier',v})));
+
+    const fmt=$('fmtRow');
+    [['all','All Formats'],['video','Video'],['static','Static']]
+      .forEach(([v,l])=>fmt.appendChild(chip(l, state.format===v, {k:'format',v})));
+
+    const ss=$('styleSel');
+    (DATA.filters.styles||[]).forEach(s=>{
+      const o=document.createElement('option'); o.value=s; o.textContent=s; if(state.style===s) o.selected=true; ss.appendChild(o);
+    });
+    const st=$('stateSel');
+    (DATA.filters.states||[]).forEach(s=>{
+      const o=document.createElement('option'); o.value=s; o.textContent=s; if(state.geo===s) o.selected=true; st.appendChild(o);
+    });
+    $('spendSel').value=String(state.minSpend||0);
+    $('sortSel').value=state.sort;
+    $('q').value=state.q;
+    $('playableOnly').checked=state.playableOnly;
+
+    document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
+      const k=b.dataset.k, v=b.dataset.v;
+      if(k==='trucker'){ state.trucker=!state.trucker; }
+      else { state[k]=v; if(k==='account'){ state.trucker=false; } }
+      syncChips(); render();
+    }));
+    ['styleSel','stateSel','spendSel','sortSel'].forEach(id=>{
+      $(id).addEventListener('change',()=>{
+        state.style=$('styleSel').value;
+        state.geo=$('stateSel').value;
+        state.minSpend=Number($('spendSel').value||0);
+        state.sort=$('sortSel').value;
+        render();
+      });
+    });
+    $('playableOnly').addEventListener('change',()=>{ state.playableOnly=$('playableOnly').checked; render(); });
+    let t=null;
+    $('q').addEventListener('input',()=>{ clearTimeout(t); t=setTimeout(()=>{ state.q=$('q').value.trim(); render(); },120); });
+  }
+
+  function syncChips(){
+    document.querySelectorAll('.chip').forEach(b=>{
+      const k=b.dataset.k, v=b.dataset.v;
+      if(k==='trucker'){
+        b.classList.toggle('on', state.trucker);
+        b.classList.toggle('show', state.account==='all'||state.account==='iul');
+      } else b.classList.toggle('on', state[k]===v);
+    });
+  }
+
+  function filtered(){
+    const q=(state.q||'').toLowerCase();
+    let list=DATA.ads.slice();
+    list=list.filter(a=>{
+      if(state.account!=='all' && a.account!==state.account) return false;
+      if(state.trucker && !a.trucker) return false;
+      if(state.tier!=='all' && a.tier!==state.tier) return false;
+      if(state.format==='video' && a.format!=='video') return false;
+      if(state.format==='static' && a.format==='video') return false;
+      if(state.style && a.style!==state.style) return false;
+      if(state.geo && !(a.states||[]).includes(state.geo)) return false;
+      if(state.minSpend && a.spend < state.minSpend) return false;
+      if(state.playableOnly && a.media_kind==='page_locked') return false;
+      if(state.playableOnly && a.media_kind==='missing') return false;
+      if(q){
+        const blob=[a.name,a.primary,a.headline,a.style,a.angle,a.geo,a.id,a.campaign,a.adset].join(' ').toLowerCase();
+        if(!blob.includes(q)) return false;
+      }
+      return true;
+    });
+    const tierRank={top:0,middle:1,lower:2,low_spend:3};
+    if(state.sort==='best'){
+      list.sort((a,b)=> (tierRank[a.tier]-tierRank[b.tier]) || ((a.cpl??9999)-(b.cpl??9999)) || (b.spend-a.spend));
+    } else if(state.sort==='cpl'){
+      list.sort((a,b)=> ((a.cpl??9999)-(b.cpl??9999)) || (b.spend-a.spend));
+    } else if(state.sort==='spend'){
+      list.sort((a,b)=> b.spend-a.spend);
+    } else if(state.sort==='leads'){
+      list.sort((a,b)=> b.leads-a.leads);
+    } else {
+      list.sort((a,b)=> String(b.id).localeCompare(String(a.id)));
+    }
+    return list;
+  }
+
+  function weightedCPL(list){
+    let s=0,l=0; list.forEach(a=>{s+=a.spend; l+=a.leads;});
+    return l? s/l : null;
+  }
+
+  function renderKPIs(list){
+    const vids=list.filter(a=>a.media_kind==='video').length;
+    const stats=list.filter(a=>a.media_kind==='static').length;
+    const tops=list.filter(a=>a.tier==='top').length;
+    const spend=list.reduce((x,a)=>x+a.spend,0);
+    const wcpl=weightedCPL(list);
+    $('kpis').innerHTML=[
+      ['Ads', list.length],
+      ['Playable videos', vids],
+      ['Statics', stats],
+      ['Top performers', tops],
+      ['Spend', moneyExact(spend)],
+      ['Weighted CPL', wcpl==null?'n/a':cplStr(wcpl)],
+    ].map(([l,v])=>`<div class="kpi">${l} <b>${v}</b></div>`).join('');
+    const gen=DATA.generated? new Date(DATA.generated) : null;
+    $('sub').textContent = list.length+' of '+(DATA.counts?.total||DATA.ads.length)+' creatives'
+      + (gen? ' · Updated '+gen.toLocaleString('en-US',{timeZone:'America/Denver', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'})+' MT' : '');
+  }
+
+  function cardHTML(a){
+    const thumb = mediaUrl(a.thumb || a.poster || a.image);
+    const isVid = a.media_kind==='video';
+    const isLock = a.media_kind==='page_locked';
+    const tierCls = 'p-'+a.tier;
+    return `<article class="card" data-id="${a.id}">
+      <div class="card-top">
+        <span class="pill p-acct">${a.account_label}</span>
+        <span class="pill ${tierCls}">${a.tier_label}</span>
+        <div class="metrics"><span><b>${cplStr(a.cpl)}</b> CPL</span><span><b>${money(a.spend)}</b> · ${a.leads} leads</span></div>
+      </div>
+      <div class="stage" data-act="play">
+        ${thumb? `<img class="thumb" src="${thumb}" alt="" loading="lazy" decoding="async">` : `<div style="color:#64748b;padding:24px;text-align:center">No preview</div>`}
+        ${isVid? `<div class="play"><div class="btn">▶</div></div><div class="dur">${durStr(a.duration)}</div>`:''}
+        ${isLock? `<div class="lock">Meta Page-Locked · Still Preview</div>`:''}
+      </div>
+      <div class="card-bot">
+        <div class="name" data-act="details">${escapeHtml(a.name)}</div>
+        <div class="tags">
+          ${a.style? `<span class="tag">${escapeHtml(a.style)}</span>`:''}
+          ${a.trucker? `<span class="tag">Trucker / CDL</span>`:''}
+          ${(a.states||[]).slice(0,3).map(s=>`<span class="tag">${escapeHtml(s)}</span>`).join('')}
+        </div>
+        <div class="preview">${escapeHtml(a.primary || a.headline || '')}</div>
+        <div class="actions">
+          <button type="button" data-act="details">Details</button>
+          ${a.drive_link? `<a class="btn" href="${a.drive_link}" target="_blank" rel="noopener">Drive</a>`: `<button type="button" data-act="copy">Copy</button>`}
+          <button type="button" data-act="download">Download</button>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+
+  function render(){
+    writeURL();
+    const list=filtered();
+    renderKPIs(list);
+    const grid=$('grid'), empty=$('empty');
+    if(!list.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+    empty.style.display='none';
+    grid.innerHTML=list.map(cardHTML).join('');
+  }
+
+  function findAd(id){ return DATA.ads.find(a=>a.id===id); }
+
+  function openDetails(id){
+    const a=findAd(id); if(!a) return;
+    $('dTitle').textContent=a.name;
+    const vid=mediaUrl(a.video), img=mediaUrl(a.image||a.poster||a.thumb);
+    let media='';
+    if(a.media_kind==='video' && vid){
+      media=`<video controls playsinline autoplay preload="metadata" poster="${mediaUrl(a.poster||a.thumb)||''}" src="${vid}"></video>`;
+    } else if(img){
+      media=`<img src="${mediaUrl(a.image||a.poster)||img}" alt="">`;
+    } else media=`<div style="color:#94a3b8;padding:40px">No media</div>`;
+    $('dBody').innerHTML=`<div class="dgrid">
+      <div class="dmedia">${media}${a.media_kind==='page_locked'?`<div style="position:absolute;margin:10px" class="lock">Meta Page-Locked · Still Preview</div>`:''}</div>
+      <div class="dmeta">
+        <div class="row2">
+          <div class="stat"><div class="l">Spend</div><div class="v">${moneyExact(a.spend)}</div></div>
+          <div class="stat"><div class="l">Leads</div><div class="v">${a.leads}</div></div>
+          <div class="stat"><div class="l">CPL</div><div class="v">${cplStr(a.cpl)}</div></div>
+          <div class="stat"><div class="l">Format</div><div class="v" style="font-size:15px">${a.media_kind==='page_locked'?'Page-locked video':a.format}</div></div>
+        </div>
+        <div class="kv">
+          <div>Account</div><div>${escapeHtml(a.account_label)}${a.trucker?' · Trucker / CDL':''}</div>
+          <div>Tier</div><div>${escapeHtml(a.tier_label)}</div>
+          <div>Campaign</div><div>${escapeHtml(a.campaign||'—')}</div>
+          <div>Ad set</div><div>${escapeHtml(a.adset||'—')}</div>
+          <div>Ad ID</div><div><code>${escapeHtml(a.id)}</code></div>
+          <div>Style</div><div>${escapeHtml(a.style||'')}</div>
+          <div>States</div><div>${escapeHtml((a.states||[]).join(', ')||'—')}</div>
+          <div>CTA</div><div>${escapeHtml(a.cta||'—')}</div>
+        </div>
+        ${a.headline? `<div class="copybox"><h4>Headline</h4><p>${escapeHtml(a.headline)}</p></div>`:''}
+        ${a.primary? `<div class="copybox"><h4>Primary text</h4><p>${escapeHtml(a.primary)}</p></div>`:''}
+        <div class="dbtns">
+          <button type="button" data-copy="primary">Copy primary text</button>
+          ${a.drive_link? `<a class="sec" href="${a.drive_link}" target="_blank" rel="noopener">Open in Google Drive</a>`:''}
+          <button type="button" class="sec" data-dl="1">Download file</button>
+        </div>
+      </div>
+    </div>`;
+    $('ov').classList.add('on');
+    $('dBody').querySelector('[data-copy]')?.addEventListener('click',()=>{
+      navigator.clipboard.writeText(a.primary||a.headline||'').then(()=>toast('Copied primary text'));
+    });
+    $('dBody').querySelector('[data-dl]')?.addEventListener('click',()=>downloadAd(a));
+  }
+
+  function downloadAd(a){
+    const rel = a.video || a.image || a.poster || a.thumb;
+    if(!rel){ toast('No file available yet'); return; }
+    const url=mediaUrl(rel);
+    const ext = (rel.split('.').pop()||'bin');
+    const ael=document.createElement('a');
+    ael.href=url; ael.download=(a.name||a.id).replace(/[^\w\-]+/g,'_').slice(0,80)+'.'+ext;
+    ael.target='_blank'; ael.rel='noopener'; document.body.appendChild(ael); ael.click(); ael.remove();
+  }
+
+  function playInCard(card, a){
+    const stage=card.querySelector('.stage'); if(!stage) return;
+    if(a.media_kind!=='video' || !a.video){ openDetails(a.id); return; }
+    const url=mediaUrl(a.video);
+    stage.innerHTML=`<video controls autoplay playsinline preload="metadata" poster="${mediaUrl(a.poster||a.thumb)||''}" src="${url}" style="width:100%;height:100%;object-fit:cover;background:#000"></video>`;
+    const v=stage.querySelector('video');
+    v?.play?.().catch(()=>{});
+  }
+
+  $('grid').addEventListener('click', (e)=>{
+    const card=e.target.closest('.card'); if(!card) return;
+    const a=findAd(card.dataset.id); if(!a) return;
+    const act=e.target.closest('[data-act]')?.dataset?.act;
+    if(act==='download'){ e.preventDefault(); downloadAd(a); return; }
+    if(act==='copy'){ e.preventDefault(); navigator.clipboard.writeText(a.primary||a.headline||a.name).then(()=>toast('Copied')); return; }
+    if(act==='details'){ openDetails(a.id); return; }
+    if(act==='play' || e.target.closest('.stage')){
+      if(a.media_kind==='video') playInCard(card,a);
+      else openDetails(a.id);
+    }
+  });
+
+  $('dClose').onclick=()=>{ $('ov').classList.remove('on'); $('dBody').innerHTML=''; };
+  $('ov').addEventListener('click',(e)=>{ if(e.target=== $('ov')) $('dClose').onclick(); });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') $('dClose').onclick(); });
+
+  // header links
+  const links=DATA.links||{};
+  $('toplinks').innerHTML = [
+    links.drive? `<a href="${links.drive}" target="_blank" rel="noopener">Google Drive folder</a>`:'',
+    links.sheet? `<a href="${links.sheet}" target="_blank" rel="noopener">Ranked Top Performers</a>`:'',
+  ].join('');
+
+  parseURL();
+  buildFilterBar();
+  render();
+})();
+</script>
+</body>
+</html>
