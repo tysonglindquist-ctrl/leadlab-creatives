@@ -669,12 +669,12 @@ main{max-width:1440px;margin:0 auto;padding:14px 16px 80px}
         <div class="kv">
           <div>Account</div><div>${escapeHtml(a.account_label)}${a.trucker?' · Trucker / CDL':''}</div>
           <div>Tier</div><div>${escapeHtml(a.tier_label)}</div>
-          <div>Campaign</div><div>${escapeHtml(a.campaign||'—')}</div>
-          <div>Ad set</div><div>${escapeHtml(a.adset||'—')}</div>
+          <div>Campaign</div><div>${escapeHtml(a.campaign||'n/a')}</div>
+          <div>Ad set</div><div>${escapeHtml(a.adset||'n/a')}</div>
           <div>Ad ID</div><div><code>${escapeHtml(a.id)}</code></div>
           <div>Style</div><div>${escapeHtml(a.style||'')}</div>
-          <div>States</div><div>${escapeHtml((a.states||[]).join(', ')||'—')}</div>
-          <div>CTA</div><div>${escapeHtml(a.cta||'—')}</div>
+          <div>States</div><div>${escapeHtml((a.states||[]).join(', ')||'n/a')}</div>
+          <div>CTA</div><div>${escapeHtml(a.cta||'n/a')}</div>
         </div>
         ${a.headline? `<div class="copybox"><h4>Headline</h4><p>${escapeHtml(a.headline)}</p></div>`:''}
         ${a.primary? `<div class="copybox"><h4>Primary text</h4><p>${escapeHtml(a.primary)}</p></div>`:''}
